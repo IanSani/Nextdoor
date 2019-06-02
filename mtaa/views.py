@@ -73,3 +73,9 @@ def edit_profile(request):
     else:
         form = EditProfileForm(instance=profile)
     return render(request, 'profiles/edit_profile.html', {"form": form})
+
+def hoods(request):
+
+    hood = Hood.objects.filter(user=request.user)
+
+    return render(request, 'hoods/hood.html', {"hood": hood})
