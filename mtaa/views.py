@@ -116,3 +116,21 @@ def search(request):
     else:
         message = "You Haven't searched for any hood"
         return render(request, 'hood/search.html', {"message": message})
+
+@login_required(login_url='/accounts/login/')
+def create_post(request):
+
+    if Join.objects.filter(user_id=request.user).exists():
+        if request.method == 'POST':
+            form = PostForm(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.posted_by = request.user
+                post.hood = request.user.join.hood_id
+                post.save()
+                messages.success(
+                    request, 'You have succesfully created a Post')
+                return redirect('home')
+        else:
+            form = PostForm()
+        return render(request, 'posts/createpost.html', {"form": form})
