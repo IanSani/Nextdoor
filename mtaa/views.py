@@ -55,3 +55,21 @@ def profile(request):
     hoods = Hood.objects.filter(user=request.user).all()
     business = Business.objects.filter(user=request.user).all()
     return render(request, 'profiles/profile.html', {"profile": profile, "hoods": hoods, "business": business})
+
+@login_required(login_url='/accounts/login/')
+def edit_profile(request):
+    current_user = request.user
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = EditProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
+            profile.email = current_user.email
+            profile.save()
+        return redirect('profile')
+
+    else:
+        form = EditProfileForm(instance=profile)
+    return render(request, 'profiles/edit_profile.html', {"form": form})
