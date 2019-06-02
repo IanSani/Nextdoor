@@ -29,3 +29,16 @@ class Hood(models.Model):
 
     class Meta:
         ordering = ['hood_name']
+
+class Business(models.Model):
+    b_photo = models.ImageField(upload_to='business/',null=True)
+    b_name = models.CharField(max_length=100, blank=True, null=True)
+    b_description = models.TextField(max_length=200, blank=True, null=True)
+    b_email = models.CharField(max_length=100, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE,null=True)
+    hood = models.ForeignKey(Hood, on_delete=models.CASCADE, related_name='biz',null=True)
+
+    @classmethod
+    def get_business(cls):
+        business = Business.objects.all()
+        return business
