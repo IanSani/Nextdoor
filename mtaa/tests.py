@@ -18,3 +18,19 @@ class ProfileTest(TestCase):
         self.profile.save()
         profile = Profile.get_profile()
         self.assertTrue(len(profile) > 0)
+
+class HoodTest(TestCase):
+    def setUp(self):
+        self.Kinoo = Location.objects.create(name='Kinoo')
+
+        self.south = Hood.objects.create(
+            hood_name='south',occupants_count =1, location=self.Kinoo)
+
+    def test_instance(self):
+        self.south.save()
+        self.assertTrue(isinstance(self.south, Hood))
+
+    def test_get_hoods(self):
+        self.south.save()
+        hoods = Hood.get_hoods()
+        self.assertTrue(len(hoods) > 0)
