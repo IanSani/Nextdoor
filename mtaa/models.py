@@ -68,3 +68,10 @@ class Profile(models.Model):
 
     class Meta:
         ordering = ['user']
+
+class Join(models.Model):
+	user_id = models.OneToOneField(User)
+	hood_id = models.ForeignKey(Hood)
+
+	def __str__(self):
+		return self.user_id
