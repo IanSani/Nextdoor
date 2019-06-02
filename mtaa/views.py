@@ -103,3 +103,16 @@ def exitHood(request, hoodId):
         messages.error(
             request, 'You have succesfully exited this Neighbourhood.')
         return redirect('home')
+
+def search(request):
+
+    if request.GET['search']:
+        hood_search = request.GET.get("search")
+        hoods = Hood.search_hood(hood_search)
+        message = f"{hood_search}"
+
+        return render(request, 'hoods/search.html', {"message": message, "hoods": hoods})
+
+    else:
+        message = "You Haven't searched for any hood"
+        return render(request, 'hood/search.html', {"message": message})
