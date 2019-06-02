@@ -156,3 +156,50 @@ def delete_post(request, postId):
     Posts.objects.filter(pk=postId).delete()
     messages.error(request, 'Succesfully Deleted a Post')
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required(login_url='/accounts/login/')
+def create_hood(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = CreateHoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            hood = form.save(commit=False)
+            hood.user = current_user
+            hood.save()
+            messages.success(
+                request, 'You Have succesfully created a hood.Now proceed and join a hood')
+        return redirect('home')
+    else:
+        form = CreateHoodForm()
+    return render(request, 'hoods/create_hood.html', {"form": form})
+
+@login_required(login_url='/accounts/login/')
+def update_hood(request, id):
+    current_user = request.user
+    hood = get_object_or_404(Hood, pk=id)
+    if request.method == 'POST':
+        form = CreateHoodForm(request.POST, request.FILES, instance=hood)
+        if form.is_valid():
+            hood = form.save(commit=False)
+            hood.user = current_user
+            hood.save()
+            messages.success(
+                request, 'You Have succesfully Edited Hood Details.')
+        return redirect('home')
+    else:
+        form = CreateHoodForm(instance=hood)
+    return render(request, 'hoods/create_hood.html', {"form": form})
+
+
+@login_required(login_url='/accounts/login/')
+def delete_hood(request, id):
+
+    Hood.objects.filter(user=request.user, pk=id).delete()
+    messages.error(request, 'Succesfully deleted your hood')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def occupants(request, id):
+    occupants = Join.objects.filter(id=hood_id).count()
+
+    return redirect('home')
