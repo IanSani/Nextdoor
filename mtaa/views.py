@@ -12,6 +12,7 @@ from .tokens import account_activation_token
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 from django.contrib import messages
+from .models import Profile
 
 # Create your views here.
 
@@ -95,7 +96,7 @@ def join(request, hoodId):
         request, 'Success! You have succesfully joined this Neighbourhood ')
     return redirect('home')
 
-ogin_required(login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
 def exitHood(request, hoodId):
 
     if Join.objects.filter(user_id=request.user).exists():
