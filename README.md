@@ -1,7 +1,7 @@
 ![MAISHA MTAANI](/static/img/logo.png)
 
 
-## Built By [Ian sani](https://github.com/iansani/)
+## Built By [Ian Sani](https://github.com/iansani/)
 
 ## Description
 This is a web application that allows users to join neighborhoods, create new neighborhoods, delete hoods, update and create profiles.
