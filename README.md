@@ -1,5 +1,3 @@
-![MAISHA MTAANI](/static/img/logo.png)
-
 
 ## Built By [Ian Sani](https://github.com/iansani/)
 
